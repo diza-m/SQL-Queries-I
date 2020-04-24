@@ -1,0 +1,60 @@
+
+
+-- Q1
+-- Print the total number of orders and their total tax amount.
+-- Use the headings ORDER_COUNT, TOTAL_TAX in the query result.
+
+SELECT COUNT(*) order_count, SUM(tax_amount) total_tax
+FROM orders;
+
+SELECT COUNT(order_id) order_count, SUM(tax_amount) total_tax
+FROM orders;
+
+-- Q2
+
+-- How many orders are paid by Visa cards, and what are the total tax amount of these orders?
+-- Use a single query to get both answers. Use the headings VISA_ORDER_COUNT, VISA_TOTAL_TAX in the query result.
+
+SELECT COUNT(*) visa_order_count, SUM(tax_amount) visa_total_tax
+FROM orders
+WHERE card_type = 'Visa';
+
+SELECT COUNT(order_id) visa_order_count, SUM(tax_amount) visa_total_tax
+FROM orders
+WHERE card_type = 'Visa';
+
+-- Q3
+
+-- For each type of credit cards, print the card type, the total number of orders paid by credit cards of this type, 
+-- and the total tax amount of such orders for this card type.
+-- Use the headings CARD_TYPE, CARD_ORDER_COUNT, CARD_TOTAL_TAX in the query result.
+
+SELECT card_type, COUNT(*) card_order_count, SUM(tax_amount) card_total_tax
+FROM orders
+GROUP BY card_type;
+
+SELECT card_type, COUNT(order_id) card_order_count, SUM(tax_amount) card_total_tax
+FROM orders
+GROUP BY card_type;
+
+-- Q4
+
+-- For each product category, print the category name, the number of products in this category, the highest listing price of products in this category, 
+-- and the lowest listing price of products in this category.
+-- Use the headings CATEGORY_NAME, PRODUCT_COUNT, HIGHEST_LISTING_PRICE, and LOWEST_LISTING_PRICE in the query result.
+
+SELECT category_name, COUNT(*) product_count,
+       MAX(list_price) highest_listing_price, MIN(list_price) lowest_listing_price
+FROM categories c JOIN products p 
+     ON (c.category_id = p.category_id)
+GROUP BY category_name;  
+
+SELECT category_name, COUNT(product_id) product_count,
+       MAX(list_price) highest_listing_price, MIN(list_price) lowest_listing_price
+FROM categories c JOIN products p 
+     ON (c.category_id = p.category_id)
+GROUP BY category_name; 
+
+
+
+
